@@ -1,0 +1,165 @@
+body {
+    font-family: 'Segoe UI', "Nimbus Sans", sans-serif, Arial;
+    color: #333333; /* Dark gray text */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.offset {
+  transform: translate(var(--offset-x, 0px), var(--offset-y, 0px));
+}
+
+.box {
+    width: var(--width, 0px);
+    height: var(--height, 100px);
+    background-color: #f1f1f1;
+}
+
+.box-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: 150px;
+    margin-right: 150px;
+    margin-top: 20px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    margin-left: 150px; 
+    min-height: 60px;
+}
+
+.checkbox-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    min-height: 60px;
+}
+
+.section-line {
+    width: 50px;
+    height: 2px;
+    background-color: #F1BE48;
+}
+
+button {
+    width: var(--width, 50px);
+    height: var(--height, 50px);
+    background-color: #ffffff;
+    border: 2px solid #7C2529; 
+    border-radius: 8px; /* Creates the fillet */
+
+    font-size: 28px;
+    font-weight: bold;
+    color: #7C2529;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #f1f1f1;
+    border-color: #7C2529;
+}
+
+.button-text {
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    font-size: 24px;
+    color: #C8102E;
+    font-family: "Nimbus Sans";
+}
+  
+.size {
+    font-size: var(--font-size, 16px);
+}
+
+.isu-dropdown {
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  
+    width: 100%;
+    padding: 10px 40px 10px 14px; 
+    font-size: 24px;
+    color: #7C2529;
+    background-color: #ffffff;
+  
+    border: 2px solid #7C2529; 
+    border-radius: 16px;        /* Creates the fillet */
+  
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.isu-dropdown:hover {
+    border-color: #7C2529;
+    box-shadow: 0 0 8px rgba(124, 37, 41, 0.5);
+}
+
+.isu-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: #7C2529; /* ISU Crimson */
+    cursor: pointer;
+}
+
+/* Container to relative-position the arrow */
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: var(--width, 300px); 
+    flex-shrink: 0;
+}
+
+/* Custom CSS Downward Arrow */
+.select-wrapper::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    /* Creates a clean triangle arrow matching your text color */
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid #7C2529; /* ISU Crimson */
+    
+    pointer-events: none; /* Prevents arrow from blocking clicks to the menu */
+}
+
+.cardinalRedSans {
+    color: #C8102E;
+    font-family: "Nimbus Sans";
+}
+
+.cardinalRedArial {
+    color: #C8102E;
+    font-family: Arial;
+}
+
+.crimson {
+    color: #7C2529;
+    font-family: Arial;
+}
+
+.grey {
+    color: #333333;
+    font-family: Arial;
+}

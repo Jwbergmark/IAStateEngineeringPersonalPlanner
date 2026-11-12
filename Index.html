@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <h2 class="cardinalRedSans offset" style="--offset-x: 150px; --offset-y: 40px;"> 
+        Iowa State University </h2>
+
+    <div class="box offset" style="--width: 100%; --height: 80px; 
+    --offset-x: 0px; --offset-y: 50px;"></div>
+
+    <div class="row">
+        <h3 class="crimson offset" style=" --offset-y: -20px;"> 
+        College of Engineering </h3>
+
+        <!-- <button class="button-text" id="reset" style="--offset-x: 1000px; --offset-y: -20px;">
+            Reset
+        </button> -->
+    </div>
+
+    <h1 class="cardinalRedSans offset size" style="--offset-x: 150px; --offset-y: 0px; --font-size: 64px;">
+        Personal Degree Planner </h1>
+  
+    <p class="grey offset" style="--offset-x: 150px; --offset-y: -20px;">
+        Students can use this tool to plan their academic journey at Iowa State University. 
+        After selecting you major, minor, and any other personal details, your own customized degree plan will be generated.
+    </p>
+
+
+    <h1 class="cardinalRedSans offset" style="--offset-x: 150px; --offset-y: -20px;">
+        Program of Study </h1>
+
+    <div class="section-line offset" style="--offset-x: 150px; --offset-y: -20px;"> </div>
+    
+    <div class="row">
+        <!-- Major selection -->
+        <div class="select-wrapper offset" style="--width: 330px;">
+            <select id="major" name="major" class="isu-dropdown">
+                <option value="select" selected> Select your major </option>
+                <option value="aerospace">Aerospace Engineering</option>
+                <option value="agricultural">Agricultural Engineering</option>
+                <option value="biological systems">Biological Systems Engineering</option>
+                <option value="biomedical">Biomedical Engineering</option>
+                <option value="chemical">Chemical Engineering</option>
+                <option value="civil">Civil Engineering</option>
+                <option value="computer">Computer Engineering</option>
+                <option value="construction">Construction Engineering</option>
+                <option value="cyber security">Cyber Security Engineering</option>
+                <option value="electrical">Electrical Engineering</option>
+                <option value="environmental">Environmental Engineering</option>
+                <option value="industrial">Industrial Engineering</option>
+                <option value="materials">Materials Engineering</option>
+                <option value="mechanical">Mechanical Engineering</option>
+                <option value="software">Software Engineering</option>
+            </select>
+        </div>
+
+        <!-- Minor selection 1 -->
+        <div id="minor1-wrapper" class="select-wrapper" style="--width: 330px;">
+            <select id="minor1" name="minor1" class="isu-dropdown">
+                <option value="select" selected> Select your minor </option>
+                <option value="none">None</option>
+                <option value="biomedical engineering">Biomedical Engineering</option>
+                <option value="cyber-physical systems">Cyber-Physical Systems</option>
+                <option value ="cyber security">Cyber Security</option>
+                <option value="energy systems">Energy Systems</option>
+                <option value="engineering sales">Engineering Sales</option>
+                <option value="entrepreneurial studies">Entrepreneurial Studies</option>
+                <option value="nondestructive evaluation">Nondestructive Evaluation</option>
+                <option value="sustainability studies">Sustainability Studies</option>
+                <option value="vehicle systems">Vehicle Systems</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <!-- Minor selection 2 -->
+        <div id="minor2-wrapper" class="select-wrapper" style="--width: 330px;">
+            <select id="minor2" name="minor2" class="isu-dropdown">
+                <option value="select" selected> Select your minor (2) </option>
+                <option value="none">None</option>
+                <option value="biomedical engineering">Biomedical Engineering</option>
+                <option value="cyber-physical systems">Cyber-Physical Systems</option>
+                <option value ="cyber security">Cyber Security</option>
+                <option value="energy systems">Energy Systems</option>
+                <option value="engineering sales">Engineering Sales</option>
+                <option value="entrepreneurial studies">Entrepreneurial Studies</option>
+                <option value="nondestructive evaluation">Nondestructive Evaluation</option>
+                <option value="sustainability studies">Sustainability Studies</option>
+                <option value="vehicle systems">Vehicle Systems</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <!-- Minor selection 3 -->
+        <div id="minor3-wrapper" class="select-wrapper" style="--width: 330px;">
+            <select id="minor3" name="minor3" class="isu-dropdown">
+                <option value="select" selected> Select your minor (3) </option>
+                <option value="none">None</option>
+                <option value="biomedical engineering">Biomedical Engineering</option>
+                <option value="cyber-physical systems">Cyber-Physical Systems</option>
+                <option value ="cyber security">Cyber Security</option>
+                <option value="energy systems">Energy Systems</option>
+                <option value="engineering sales">Engineering Sales</option>
+                <option value="entrepreneurial studies">Entrepreneurial Studies</option>
+                <option value="nondestructive evaluation">Nondestructive Evaluation</option>
+                <option value="sustainability studies">Sustainability Studies</option>
+                <option value="vehicle systems">Vehicle Systems</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <button id="add" style="--width: 50px; --height: 50px;">
+            +
+        </button>
+    </div>
+
+    <!-- Options -->
+    <div id="agricultural-options-wrapper" class="select-wrapper offset" style="--width: 330px; --offset-x: 150px; --offset-y: 10px;">
+        <select id="agricultural-options" name="agricultural-options" class="isu-dropdown">
+            <option value="select" selected> Select your option </option>
+            <option value="animal production systems">Animal Production Systems Engineering</option>
+            <option value="land and water resources">Land and Water Resources Engineering</option>
+            <option value="vehicle systems">Vehicle Systems Engineering</option>
+        </select>
+    </div>
+
+    <div id="biological-systems-options-wrapper" class="select-wrapper offset" style="--width: 330px; --offset-x: 150px; --offset-y: 10px;">
+        <select id="biological-systems-options" name="biological-systems-options" class="isu-dropdown">
+            <option value="select" selected> Select your option </option>
+            <option value="ecological">Ecological Engineering</option>
+            <option value="food & bioprocess">Food & Bioprocess Engineering</option>
+            <option value="open">Open option</option>
+        </select>
+    </div>
+
+    <div id="biomedical-emphasis-wrapper" class="select-wrapper offset" style="--width: 330px; --offset-x: 150px; --offset-y: 10px;">
+        <select id="biomedical-emphasis-options" name="biomedical-emphasis-options" class="isu-dropdown">
+            <option value="select" selected> Select your emphasis </option>
+            <option value="instrumentation">Instrumentation </option>
+            <option value="mechanics and manufacturing">Mechanics and manufacturing </option>
+            <option value="medical molecules and materials">Medical molecules and materials </option>
+        </select>
+    </div>
+
+    <div id="civil-options-wrapper" class="select-wrapper offset" style="--width: 330px; --offset-x: 150px; --offset-y: 10px;">
+        <select id="civil-options" name="civil-options" class="isu-dropdown">
+            <option value="select" selected> Select your option </option>
+            <option value="general">General</option>
+            <option value="environmental">Environmental</option>
+        </select>
+    </div>
+
+    <div id="construction-options-wrapper" class="select-wrapper offset" style="--width: 330px; --offset-x: 150px; --offset-y: 10px;">
+        <select id="construction-options" name="construction-options" class="isu-dropdown">
+            <option value="select" selected> Select your option </option>
+            <option value="building">Building</option>
+            <option value="electrical">Electrical</option>
+            <option value="infrastructure">Infrastructure</option>
+            <option value="mechanical">Mechanical</option>
+        </select>
+    </div>
+
+
+    <!-- Transfer Credits -->
+    <h1 class="cardinalRedSans offset" style="--offset-x: 150px; --offset-y: 10px;">
+        Transfer Credits </h1>
+
+    <div class="section-line offset" style="--offset-x: 150px; --offset-y: 10px;"> </div>
+
+    <!-- Mechanical Engineering -->
+    <div class="box-container">
+        <div class="checkbox-row">
+            <input type="checkbox" class="isu-checkbox" id="calc1-check" name="check" value="yes">
+            <label for="calc1-check" class="crimson"> Calculus I </label>
+        </div>
+
+        <div class="checkbox-row">
+            <input type="checkbox" class="isu-checkbox" id="calc2-check" name="check" value="yes">
+            <label for="calc2-check" class="crimson"> Calculus II </label>
+        </div> 
+
+        <div class="checkbox-row">
+            <input type="checkbox" class="isu-checkbox" id="calc3-check" name="check" value="yes">
+            <label for="calc3-check" class="crimson"> Calculus III </label>
+        </div>
+
+        <div class="checkbox-row">
+            <input type="checkbox" class="isu-checkbox" id="difEq-check" name="check" value="yes">
+            <label for="difEq-check" class="crimson"> Differential Equations </label>
+        </div>
+
+        <div class="checkbox-row">
+            <input type="checkbox" class="isu-checkbox" id="chenm-check" name="check" value="yes">
+            <label for="chenm-check" class="crimson"> Chemistry for Engineers </label>
+        </div>
+
+
+    </div>
+
+    <script src="Course.js"> </script>
+    <script src="DegreePlanner.js"> </script>
+</body>
+</html>
+
