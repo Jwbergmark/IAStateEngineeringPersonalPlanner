@@ -68,6 +68,7 @@ const statics2 = new Course('CE 2720', 'Applied Statics', 2, [statics1, physics1
 
 const engrStats = new Course('STAT 3050', 'Engineering Statistics', 3, [calc1]);
 
+
 // EE
 const ee4420 = new Course('EE 4420', 'Introduction to Circuits and Instruments', 2, [difEq, physics2]);
 const ee4480 = new Course('EE 4480', 'Introduction to AC Circuits and Motors', 2, [], [ee4420]);
