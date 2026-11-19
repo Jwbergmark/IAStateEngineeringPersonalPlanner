@@ -1,19 +1,23 @@
 class Course {
-    constructor(id, title, credits, prerequisites = [], corequisites = []) {
+    constructor(id, title, credits, seasons, prerequisites = [], corequisites = [], years = []) {
         this.id = id;
         this.title = title;
         this.credits = credits;
+        this.seasons = seasons; // Will be spring, fall, or both
         this.prerequisites = prerequisites;
         this.corequisites = corequisites;
-        this.isSatisfied = false;
-        this.taking = false;
+        this.years = years;
+        this.taken = false; // Has been taken
+        this.taking = false; // Currently taking
     }
+
+    static allCourses = [];
 
     /**
     * Use to set a course as taken.
     */
     markAsTaken() {
-        this.isSatisfied = true;
+        this.taken = true;
     }
 
     /**
@@ -26,36 +30,62 @@ class Course {
     /**
     * Checks if the prerequisites and corequisites for a course are satisfied. If satisfied, the course can be taken.
     */
-    canTake() {
+    canTake(currentYear) {
         const prereqOptions = this.prerequisites.filter(prereq => prereq instanceof Array);
         const singlePrereqs = this.prerequisites.filter(prereq => prereq instanceof Course);
         let prereqsTaken = false;
 
-        if (prereqOptions.length > 0) {
-            // Logic: If every option in the prereqOptions array has at least one course that is satisfied, then the prerequisites are satisfied.
-            if (singlePrereqs.length > 0) {
-                prereqsTaken = singlePrereqs.every(prereq => prereq.isSatisfied) &&
-                prereqOptions.every(option => option.some(prereq => prereq.isSatisfied));
-            } else prereqsTaken = prereqOptions.every(option => option.some(prereq => prereq.isSatisfied));
-        } else prereqsTaken = this.prerequisites.every(prereq => prereq.isSatisfied);
-
-        const coreqsTaking = this.corequisites.some(coreq => coreq.taking);
-        const coreqsTaken = this.corequisites.every(coreq => coreq.isSatisfied);
-    
-        if (this.prerequisites.length === 0) {
-            if (this.corequisites.length === 0) {
-                return true;
-            } else return (coreqsTaking || coreqsTaken);
+        if (this.taken || this.taking){
+            return false;
         } else {
-            if (this.corequisites.length === 0) {
-                return prereqsTaken;
-            } else return prereqsTaken && (coreqsTaking || coreqsTaken);
-        } 
+            if (this.years.length > 0 && !this.years.includes(currentYear)) {
+                return false;
+            } else {
+                if (prereqOptions.length > 0) {
+                    // Logic: If every option in the prereqOptions array has at least one course that is satisfied, then the prerequisites are satisfied.
+                    if (singlePrereqs.length > 0) {
+                        prereqsTaken = singlePrereqs.every(prereq => prereq.taken) &&
+                        prereqOptions.every(option => option.some(prereq => prereq.taken));
+                    } else prereqsTaken = prereqOptions.every(option => option.some(prereq => prereq.taken));
+                } else prereqsTaken = this.prerequisites.every(prereq => prereq.taken);
+
+                const coreqsTaking = this.corequisites.some(coreq => coreq.taking);
+                const coreqsTaken = this.corequisites.every(coreq => coreq.taken);
+            
+                if (this.prerequisites.length === 0) {
+                    if (this.corequisites.length === 0) {
+                        return true;
+                    } else return (coreqsTaking || coreqsTaken);
+                } else {
+                    if (this.corequisites.length === 0) {
+                        return prereqsTaken;
+                    } else return prereqsTaken && (coreqsTaking || coreqsTaken);
+                } 
+            }
+        }
+    }
+
+    /**
+    * Checks if the course has been taken.
+    */
+    isTaken() {
+        return this.taken;
+    }
+
+    isTaking() {
+        return this.taking;
     }
 
     getCredits() {
         return this.credits;
     }
-       
+    
+    getSeasons() {
+        return this.seasons;
+    }
+
+    getYears() {
+        return this.years;
+    }
           
 }

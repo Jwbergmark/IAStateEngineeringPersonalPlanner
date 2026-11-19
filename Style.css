@@ -15,16 +15,28 @@ body {
 .box {
     width: var(--width, 0px);
     height: var(--height, 100px);
-    background-color: #f1f1f1;
+    background-color: var(--color, #f1f1f1);
 }
 
-.box-container {
+.checkbox-container {
     display: flex;
     align-items: center;
     gap: 16px;
     margin-left: 150px;
     margin-right: 150px;
     margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.course-box {
+    width: var(--width, 300px);
+    height: var(--height, 350px);
+    padding: 10px 40px 10px 14px; 
+    color: #7C2529;
+    background-color: #ffffff;
+  
+    border: 2px solid #7C2529; 
+    border-radius: 16px;        /* Creates the fillet */
 }
 
 .row {
@@ -34,6 +46,15 @@ body {
     gap: 16px;
     margin-left: 150px; 
     min-height: 60px;
+}
+
+.full-row {
+    display: flex;
+    flex-direction: row;
+    min-height: 60px;
+    flex-shrink: 0; 
+    white-space: nowrap; 
+    width: 100%
 }
 
 .checkbox-row {
@@ -77,10 +98,19 @@ button:hover {
     appearance: none; 
     -webkit-appearance: none;
     -moz-appearance: none;
+    border: none;
+    background: none;
+    font-weight: var(--font-weight, bold);
     
-    font-size: 24px;
-    color: #C8102E;
-    font-family: "Nimbus Sans";
+    font-size: 20px;
+    color: var(--color, #C8102E);
+    font-family: Arial;
+}
+
+.button-text:hover {
+    color: var(--hover-color, #7C2529);
+    border-color: transparent;
+    background-color: transparent;
 }
   
 .size {
@@ -144,22 +174,26 @@ button:hover {
     pointer-events: none; /* Prevents arrow from blocking clicks to the menu */
 }
 
-.cardinalRedSans {
-    color: #C8102E;
+.sans {
     font-family: "Nimbus Sans";
 }
 
-.cardinalRedArial {
-    color: #C8102E;
+.arial {
     font-family: Arial;
+}
+
+.cardinalRed {
+    color: #C8102E;
 }
 
 .crimson {
     color: #7C2529;
-    font-family: Arial;
 }
 
 .grey {
     color: #333333;
-    font-family: Arial;
+}
+
+.white {
+    color:#f1f1f1
 }
