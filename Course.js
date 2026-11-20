@@ -9,9 +9,11 @@ class Course {
         this.years = years;
         this.taken = false; // Has been taken
         this.taking = false; // Currently taking
+        this.priority = 0;
     }
 
     static allCourses = [];
+
 
     /**
     * Use to set a course as taken.
@@ -62,6 +64,46 @@ class Course {
                     } else return prereqsTaken && (coreqsTaking || coreqsTaken);
                 } 
             }
+        }
+    }
+
+    /**
+    * Finds the number of courses that depend on this course as a prerequisite or corequisite. This is used to determine the priority of a course in the degree plan.
+    */
+    findNumberOfDependents(requiredCourses) {
+        const dependents = new Set();
+        const coursesToCheck = [this];
+
+        while (coursesToCheck.length > 0) {
+            const course = coursesToCheck.shift();
+            const directDependents = requiredCourses.filter(dependent =>
+                dependent !== this &&
+                (dependent.prerequisites.includes(course)
+                || dependent.prerequisites.filter(prereq => prereq instanceof Array).some(option => option.includes(course))
+                || dependent.corequisites.includes(course))
+            );
+
+            for (const dependent of directDependents) {
+                if (!dependents.has(dependent)) {
+                    dependents.add(dependent);
+                    coursesToCheck.push(dependent);
+                }
+            }
+        }
+
+        return dependents.size;
+    }
+
+    /**
+    * Sets the priority of the course. Should only be used on courses that can be taken.
+    */
+    setPriority(requiredCourses) {
+        if (this.findNumberOfDependents(requiredCourses) > 0) {
+            this.priority = this.findNumberOfDependents(requiredCourses);
+            this.priority += 1; // Add a constant 1 to priority to indicate significance of having at least one dependent.
+        }
+        if (this.seasons != 'both') {
+            this.priority += 1; 
         }
     }
 

@@ -217,6 +217,7 @@ const me3700 = new Course('ME 3700', 'Engineering Measurements', 3, 'both', [ee4
 const me3240 = new Course('ME 3240', 'Manufacturing Engineering', 3, 'both', [me2700, me3240L]);
 const me4210 = new Course('ME 4210', 'System Dynamics and Control', 4, 'both', [ee4420, ee4480, dynamics, difEq]);
 const me4360 = new Course('ME 4360', 'Heat Transfer', 4, 'both', [thermo2, fluids]);
+const me4150 = new Course('ME 4150', 'Mechanical Systems Design', 3, 'both', [me3250, me3240]);
 
 // Make a universal function to plan the degree for each major
 function planDegree(requiredCourses, baseTransferCourses, englishElectives, needsEcon) {
@@ -314,10 +315,12 @@ function planDegree(requiredCourses, baseTransferCourses, englishElectives, need
         const semestersToTake = Number(semestersOptions.value) || 8;
 
         const selectedCommsCourse = englishElectives.find(course => course.id == commsOptions.value);
-        requiredCourses.appendChild(selectedCommsCourse);
-        
+        requiredCourses.push(selectedCommsCourse);
+        if (econOptions.value == 'microeconomics'){
+            requiredCourses.push(micro); 
+        }
         if (econOptions.value == 'macroeconomics'){
-            requiredCourses.appendChild(macro);
+            requiredCourses.push(macro);
         }
 
         for (let currentSemester = 1; currentSemester <= semestersToTake; currentSemester++) {
@@ -337,6 +340,19 @@ function planDegree(requiredCourses, baseTransferCourses, englishElectives, need
             let currentCredits = 0;
             let canTakeCourses = requiredCourses.filter(course => course.canTake(currentYear));
             for (const course of canTakeCourses) {
+                course.setPriority(requiredCourses);
+            }
+
+            console.table(canTakeCourses.map(course => ({
+                id: course.id,
+                priority: course.priority,
+                dependents: course.findNumberOfDependents(requiredCourses)
+            })));
+
+            // Sort courses that can be taken by priority
+            let sortedCourses = canTakeCourses.sort((a, b) => b.priority - a.priority);
+
+            for (const course of sortedCourses) {
                 const courseDisplay = document.createElement('h3');
                 courseDisplay.classList.add('cardinalRed', 'arial');
                 courseDisplay.textContent = `${course.id} ${course.title}`;
@@ -351,6 +367,10 @@ function planDegree(requiredCourses, baseTransferCourses, englishElectives, need
             // Repeat to check for corequisite classes
             canTakeCourses = requiredCourses.filter(course => course.canTake(currentYear));
             for (const course of canTakeCourses) {
+                course.setPriority(requiredCourses);
+            }
+            sortedCourses = canTakeCourses.sort((a, b) => b.priority - a.priority);
+            for (const course of sortedCourses) {
                 if (currentCredits + course.getCredits() > 18) {
                     break;
                 }
@@ -362,7 +382,6 @@ function planDegree(requiredCourses, baseTransferCourses, englishElectives, need
                 course.markAsTaking();
             }
             const takingCourses = requiredCourses.filter(course => course.isTaking());
-            // let currentCredits = takingCourses.reduce((total, course) => total + course.getCredits(), 0);
             const totalCredits = document.createElement('h3');
             totalCredits.classList.add('cardinalRed', 'arial');
             totalCredits.textContent = `Total Credits: ${currentCredits}`;
@@ -544,7 +563,7 @@ major.addEventListener('change', (e) => {
             me1600, me1700, physics1, physics2, statics1, statics2, engrStats, 
             thermo1, me2700, me2020, dynamics, thermo2, me3240L, me3250, fluids, 
             me3700, me3240, me4210, me4360, ee4420, ee4480, em3240, mate2730,
-            engl1500, library, engl2500];
+            engl1500, library, engl2500, me4150];
         const englishElectives = [busComm, engl3090, techComm, spcm2120];
         const baseTransferCourses = [engrChem, calc1, calc2, calc3, difEq, physics1, physics2, engl1500, library, engl2500, micro, macro];
 
