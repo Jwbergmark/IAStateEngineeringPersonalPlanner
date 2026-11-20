@@ -74,6 +74,13 @@ planView.style.display = 'none';
 const semestersWrapper = document.getElementById('semesters-wrapper');
 const semestersOptions = document.getElementById('semesters');
 
+const econWrapper = document.getElementById('econ-options-wrapper');
+econWrapper.style.display = 'none';
+const commsWrapper = document.getElementById('comms-options-wrapper');
+commsWrapper.style.display = 'none';
+const econOptions = document.getElementById('econ-options');
+const commsOptions = document.getElementById('comms-options');
+
 // Logic to show additional minors upon selection
 minor2Wrapper.style.display = 'none';
 minor3Wrapper.style.display = 'none';
@@ -135,11 +142,21 @@ resetButton.addEventListener('click', () => {
     humanities.selectedIndex = 0;
     socialSciences.selectedIndex = 0;
 
-    // Plan View
+    // Specifications
     semestersOptions.selectedIndex = 0;
+    econWrapper.style.display = 'none';
+    commsWrapper.style.display = 'none';
+    econOptions.selectedIndex = 0;
+    commsOptions.selectedIndex = 0;
 });
 
 // Courses
+const techElective1 = new Course('', 'Technical Elective', 3, 'both');
+const techElective2 = new Course('', 'Technical Elective', 3, 'both');
+const techElective3 = new Course('', 'Technical Elective', 3, 'both');
+const techElective4 = new Course('', 'Technical Elective', 3, 'both');
+const techElective5 = new Course('', 'Technical Elective', 3, 'both');
+
 const engr1010 = new Course('ENGR 1010', 'Engineering Orientation', 0, 'both');
 
 const engrChem = new Course('CHEM 1670', 'General Chemistry for Engineering Students', 4, 'both');
@@ -188,7 +205,7 @@ const mate2730 = new Course('MATE 2730', 'Principles of Materials Engineering', 
 // ME
 const me1600 = new Course('ME 1600', 'Mechanical Engineering Problem Solving with Computer Applications', 3, 'both', [], [calc1, calc2, calc3, difEq]);
 const me1700 = new Course('ME 1700', 'Engineering Graphics and Introductory Design', 3, 'both', [calc1]);
-const thermo1 = new Course('ME 23100', 'Thermodynamics I', 3, 'both', [engrChem, calc2, physics1]);
+const thermo1 = new Course('ME 2310', 'Thermodynamics I', 3, 'both', [engrChem, calc2, physics1]);
 const me2700 = new Course('ME 2700', 'Introduction to Mechanical Engineering Design', 3, 'both', [me1600, me1700, physics1]);
 const me2020 = new Course('ME 2020', 'Professional Planning', 0, 'both', [], [], ['sophomore', 'junior', 'senior']);
 const dynamics = new Course('ME 3450', 'Dynamics', 3, 'both', [statics1, statics2], [difEq]);
@@ -202,7 +219,7 @@ const me4210 = new Course('ME 4210', 'System Dynamics and Control', 4, 'both', [
 const me4360 = new Course('ME 4360', 'Heat Transfer', 4, 'both', [thermo2, fluids]);
 
 // Make a universal function to plan the degree for each major
-function planDegree(requiredCourses, baseTransferCourses) {
+function planDegree(requiredCourses, baseTransferCourses, englishElectives, needsEcon) {
 
     // Transfer Checkboxes
     const moreTransferCourses = requiredCourses.filter(course => !baseTransferCourses.includes(course));
@@ -278,11 +295,30 @@ function planDegree(requiredCourses, baseTransferCourses) {
     humanitiesTitle.style.display = 'block';
     ssTitle.style.display = 'block';
 
+    if (needsEcon){
+        econWrapper.style.display = 'block';
+    }
+    commsWrapper.style.display = 'block';
+    for (const course of englishElectives) {
+            const commsOption = document.createElement('option');
+            commsOption.value = `${course.id}`;
+            commsOption.text = `${course.title}`;
+            commsOptions.appendChild(commsOption);
+        }
+
+
     // Generation Algorithm
     generateButton.onclick = () => {
         setupView.style.display = 'none';
         planView.style.display = 'block';
         const semestersToTake = Number(semestersOptions.value) || 8;
+
+        const selectedCommsCourse = englishElectives.find(course => course.id == commsOptions.value);
+        requiredCourses.appendChild(selectedCommsCourse);
+        
+        if (econOptions.value == 'macroeconomics'){
+            requiredCourses.appendChild(macro);
+        }
 
         for (let currentSemester = 1; currentSemester <= semestersToTake; currentSemester++) {
             const takenCourses = requiredCourses.filter(course => course.isTaken());
@@ -308,13 +344,17 @@ function planDegree(requiredCourses, baseTransferCourses) {
                 course.markAsTaking();
 
                 currentCredits += course.getCredits()
-                if (currentCredits > 18) {
+                if (currentCredits + course.getCredits() > 18) {
                     break;
                 }
             }
             // Repeat to check for corequisite classes
             canTakeCourses = requiredCourses.filter(course => course.canTake(currentYear));
             for (const course of canTakeCourses) {
+                if (currentCredits + course.getCredits() > 18) {
+                    break;
+                }
+                currentCredits += course.getCredits()
                 const courseDisplay = document.createElement('h3');
                 courseDisplay.classList.add('cardinalRed', 'arial');
                 courseDisplay.textContent = `${course.id} ${course.title}`;
@@ -506,10 +546,9 @@ major.addEventListener('change', (e) => {
             me3700, me3240, me4210, me4360, ee4420, ee4480, em3240, mate2730,
             engl1500, library, engl2500];
         const englishElectives = [busComm, engl3090, techComm, spcm2120];
-        const economicsElectives = [micro, macro];
         const baseTransferCourses = [engrChem, calc1, calc2, calc3, difEq, physics1, physics2, engl1500, library, engl2500, micro, macro];
 
-        planDegree(requiredCourses, baseTransferCourses)
+        planDegree(requiredCourses, baseTransferCourses, englishElectives, true)
     }
 });
 

@@ -218,7 +218,7 @@
         <div class="section-line offset" style="--offset-x: 150px; --offset-y: 40px;"> </div>
 
         <div class="row offset" style="--offset-y: 50px;">
-            <h3 id="semesters-title" class="crimson arial">
+            <h3 class="crimson arial">
                 Number of semesters: </h3>
 
             <div id="semesters-wrapper" class="select-wrapper" style="--width: 200px;">
@@ -234,10 +234,33 @@
                 </select>
             </div>
 
+            <h3 class="crimson arial offset" style="--offset-x: 150px; --offset-y: 0px">
+                Are you in the University Honors Program? </h3>
+
+            <input type="checkbox" class="isu-checkbox offset" id="honors-check" name="check" value="yes" 
+            style="--offset-x: 150px; --offset-y: 0px">
+
         </div>
 
+        <div class="row offset" style="--offset-y: 70px;">
+            <div id="econ-options-wrapper" class="select-wrapper offset" style="--width: 450px; --offset-x: 0px; --offset-y: 10px;">
+                <select id="econ-options" name="econ-options" class="isu-dropdown">
+                    <option value="select" selected> Select your economics course </option>
+                    <option value="microeconomics">Microeconomics </option>
+                    <option value="macroeconomics">Macroeconomics</option>
+                </select>
+            </div>
+
+            <div id="comms-options-wrapper" class="select-wrapper offset" style="--width: 450px; --offset-x: 150px; --offset-y: 10px;">
+                <select id="comms-options" name="comms-options" class="isu-dropdown">
+                    <option value="select" selected> Select your communications course </option>
+                    
+                </select>
+            </div>
+        </div> 
+
         <!-- Generate: -->
-        <button class="offset" id="generate" style="--width: 150px; --height: 50px; --offset-x: 150px; --offset-y: 80px;">
+        <button class="offset" id="generate" style="--width: 150px; --height: 50px; --offset-x: 150px; --offset-y: 100px;">
             Generate
         </button> 
     </div>
@@ -294,7 +317,7 @@
 
     <!-- Footer -->
     <div class="box offset" style="--color: #C8102E; --width: 100%; --height: 400px; 
-    --offset-x: 0px; --offset-y: 100px;">
+    --offset-x: 0px; --offset-y: 120px;">
         <h1 class="white sans offset size" style="--offset-x: 100px; --offset-y: 0px; --font-size: 64px;">
         Iowa State University </h1>
         <h1 class="white sans offset" style="--offset-x: 100px; --offset-y: -45px;">
