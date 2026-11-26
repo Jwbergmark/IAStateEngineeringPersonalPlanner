@@ -1,12 +1,13 @@
 class Course {
-    constructor(id, title, credits, seasons, prerequisites = [], corequisites = [], years = []) {
+    constructor(id, title, credits, seasons, suggestedYear, prerequisites = [], corequisites = [], years = []) {
         this.id = id;
         this.title = title;
         this.credits = credits;
         this.seasons = seasons; // Will be spring, fall, or both
+        this.suggestedYear = suggestedYear; //SUGGESTED year based on the degree plan, not REQUIRED
         this.prerequisites = prerequisites;
         this.corequisites = corequisites;
-        this.years = years;
+        this.years = years; //REQUIRED years
         this.taken = false; // Has been taken
         this.taking = false; // Currently taking
         this.priority = 0;
@@ -35,7 +36,11 @@ class Course {
     canTake(currentYear) {
         const prereqOptions = this.prerequisites.filter(prereq => prereq instanceof Array);
         const singlePrereqs = this.prerequisites.filter(prereq => prereq instanceof Course);
+
+        const coreqOptions = this.corequisites.filter(coreq => coreq instanceof Array);
+        const singleCoreqs = this.corequisites.filter(coreq => coreq instanceof Course);
         let prereqsTaken = false;
+        let coreqsSatisfied = true;
 
         if (this.taken || this.taking){
             return false;
@@ -51,17 +56,29 @@ class Course {
                     } else prereqsTaken = prereqOptions.every(option => option.some(prereq => prereq.taken));
                 } else prereqsTaken = this.prerequisites.every(prereq => prereq.taken);
 
-                const coreqsTaking = this.corequisites.some(coreq => coreq.taking);
-                const coreqsTaken = this.corequisites.every(coreq => coreq.taken);
-            
+                for (const coreq of singleCoreqs) {
+                    if (!coreq.taken && !coreq.taking) {
+                        coreqsSatisfied = false;
+                        break;
+                    }
+                }
+                for (const option of coreqOptions) {
+                    if (!option.every(coreq => coreq.taken)) {
+                        if (!option.some(coreq => coreq.taking)) {
+                            coreqsSatisfied = false;
+                            break;
+                        }
+                    }
+                }
+
                 if (this.prerequisites.length === 0) {
                     if (this.corequisites.length === 0) {
                         return true;
-                    } else return (coreqsTaking || coreqsTaken);
+                    } else return coreqsSatisfied;
                 } else {
                     if (this.corequisites.length === 0) {
                         return prereqsTaken;
-                    } else return prereqsTaken && (coreqsTaking || coreqsTaken);
+                    } else return prereqsTaken && coreqsSatisfied;
                 } 
             }
         }
@@ -97,13 +114,27 @@ class Course {
     /**
     * Sets the priority of the course. Should only be used on courses that can be taken.
     */
-    setPriority(requiredCourses) {
-        if (this.findNumberOfDependents(requiredCourses) > 0) {
-            this.priority = this.findNumberOfDependents(requiredCourses);
+    setPriority(requiredCourses, currentYear) {
+        // Prioritize more dependents
+        this.priority = this.findNumberOfDependents(requiredCourses);
+        if (this.priority > 0) {
             this.priority += 1; // Add a constant 1 to priority to indicate significance of having at least one dependent.
         }
+
+        // Prioritize courses that are offered in only fall or spring
         if (this.seasons != 'both') {
-            this.priority += 1; 
+            this.priority += 10; 
+        }
+
+        // Prioritize courses that are suggested for the current year
+        if (this.suggestedYear instanceof Array) {
+            if (this.suggestedYear.includes(currentYear)) {
+                this.priority += 10; 
+            }
+        } else {
+            if (this.suggestedYear == currentYear) {
+                this.priority += 10; 
+            }
         }
     }
 
@@ -114,6 +145,9 @@ class Course {
         return this.taken;
     }
 
+    /**
+    * Checks if the course is currently being taken.
+    */
     isTaking() {
         return this.taking;
     }
