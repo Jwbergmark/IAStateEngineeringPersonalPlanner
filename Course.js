@@ -4,7 +4,7 @@ class Course {
         this.title = title;
         this.credits = credits;
         this.seasons = seasons; // Will be spring, fall, or both
-        this.suggestedYear = suggestedYear; //SUGGESTED year based on the degree plan, not REQUIRED
+        this.suggestedYear = suggestedYear; //SUGGESTED year based on the degree plan, not REQUIRED ('genEd' = general education elective)
         this.prerequisites = prerequisites;
         this.corequisites = corequisites;
         this.years = years; //REQUIRED years
@@ -134,6 +134,9 @@ class Course {
         } else {
             if (this.suggestedYear == currentYear) {
                 this.priority += 10; 
+            }
+            if (this.suggestedYear == 'genEd') {
+                this.priority += 9; 
             }
         }
     }
